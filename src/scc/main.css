@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f0f2f5;
+    color: #333;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+.header {
+    background-color: #4a90e2;
+    padding: 20px;
+    font-weight: 600;
+    font-size: 24px;
+    text-align: center;
+    color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+main {
+    margin: 50px auto;
+    width: 60%;
+    float: left;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+aside {
+    width: 25%;
+    margin-top: 50px;
+    margin-left: 5%;
+    float: left;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+main .book {
+    margin-bottom: 50px;
+    background-color: #e6f7ff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+main .delete-icon, main .edit-icon {
+    float: right;
+    cursor: pointer;
+    transition: opacity 300ms ease;
+    transform: scale(1.5);
+}
+
+main .delete-icon {
+    color: #e74c3c;
+    margin-left: 10px;
+}
+
+main .edit-icon {
+    color: #4a90e2;
+}
+
+main .delete-icon:hover, main .edit-icon:hover {
+    opacity: 0.7;
+}
+
+/* Добавляем стили для формы */
+form {
+    margin-top: 20px;
+}
+
+form input:not([type="checkbox"]),
+form textarea,
+form button {
+    width: 100%;
+    padding: 15px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 300;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    color: #333;
+    outline: none;
+    font-size: 16px;
+    transition: background-color 300ms ease, transform 300ms ease;
+}
+
+form input:not([type="checkbox"]):focus,
+form textarea:focus,
+form button:focus {
+    background-color: #e6f7ff;
+    border-color: #4a90e2;
+}
+
+form input[type="checkbox"] {
+    margin: 10px;
+}
+
+form button {
+    cursor: pointer;
+    background-color: #4a90e2;
+    border: none;
+    font-weight: 400;
+    color: #ffffff;
+}
+
+form button:hover {
+    transform: scale(1.05);
+    background-color: #357ab8;
+}
+
+.book form {
+    margin-top: 20px;
+}
+
+.book form input,
+.book form textarea,
+.book form button {
+    background-color: #4a90e2;
+    color: #ffffff;
+    border: none;
+}
+
+.book form button:hover {
+    transform: scale(1.01);
+    background-color: #357ab8;
+}
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
