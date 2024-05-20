@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Books from "./components/Books";
@@ -6,17 +6,25 @@ import AddBook from "./pages/AddBook";
 import { v4 as uuidv4 } from 'uuid';
 import './scc/main.css';
 
+const loadBooksFromLocalStorage = () => {
+    const books = localStorage.getItem('books');
+    return books ? JSON.parse(books) : [];
+};
+
+const saveBooksToLocalStorage = (books) => {
+    localStorage.setItem('books', JSON.stringify(books));
+};
+
 const App = () => {
-    const [books, setBooks] = useState([
-        {
-            id: uuidv4(),
-            avtor: 'Alisher',
-            name: 'street',
-        },
-    ]);
+    const [books, setBooks] = useState(loadBooksFromLocalStorage);
+
+    useEffect(() => {
+        saveBooksToLocalStorage(books);
+    }, [books]);
 
     const deleteBook = (id) => {
-        setBooks(books.filter((el) => el.id !== id));
+        const updatedBooks = books.filter((el) => el.id !== id);
+        setBooks(updatedBooks);
     };
 
     const addBook = (book) => {
