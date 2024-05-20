@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { IoCloseCircleSharp, IoHammerSharp } from "react-icons/io5";
-import AddBook from "./AddBook";
+import AddBook from "../pages/AddBook";
 
 const Book = ({ book, onDelete, onEdit }) => {
     const [editForm, setEditForm] = useState(false);
