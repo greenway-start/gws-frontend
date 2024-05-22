@@ -5,7 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const AddBook = (props) => {
     const [avtor, setAvtor] = useState("");
     const [name, setName] = useState("");
-    const [errors, setErrors] = useState({ avtor: "", name: "" });
+    const [publishDate, setPublishDate] = useState("");
+    const [errors, setErrors] = useState({ avtor: "", name: "", publishDate: "" });
     const myForm = useRef(null);
 
     const handleAddBook = () => {
@@ -14,6 +15,7 @@ const AddBook = (props) => {
             const bookAdd = {
                 avtor: avtor,
                 name: name,
+                publishDate: publishDate
             };
             if (props.book) {
                 bookAdd.id = props.book.id;
@@ -21,13 +23,14 @@ const AddBook = (props) => {
             props.onAdd(bookAdd);
             setAvtor("");
             setName("");
-            setErrors({ avtor: "", name: "" });
+            setPublishDate("");
+            setErrors({ avtor: "", name: "", publishDate: "" });
         }
     };
 
     const validateForm = () => {
         let valid = true;
-        let errors = { avtor: "", name: "" };
+        let errors = { avtor: "", name: "", publishDate: "" };
 
         if (!/^[a-zA-Zа-яА-Я\s]*$/.test(avtor)) {
             errors.avtor = "Автор не должен содержать цифр.";
@@ -36,6 +39,11 @@ const AddBook = (props) => {
 
         if (name.length > 100) {
             errors.name = "Название книги не должно превышать 100 символов.";
+            valid = false;
+        }
+
+        if (!/^\d{4}$/.test(publishDate)) {
+            errors.publishDate = "Дата публикации должна быть годом (4 цифры).";
             valid = false;
         }
 
@@ -64,6 +72,11 @@ const AddBook = (props) => {
         }
     };
 
+    const handlePublishDateChange = (e) => {
+        const value = e.target.value;
+        setPublishDate(value);
+    };
+
     return (
         <Form ref={myForm}>
             <Form.Group controlId="formAvtor">
@@ -88,6 +101,18 @@ const AddBook = (props) => {
                     isInvalid={!!errors.name}
                 />
                 {errors.name && <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>}
+            </Form.Group>
+
+            <Form.Group controlId="formPublishDate">
+                <Form.Label>Дата публикации (год)</Form.Label>
+                <Form.Control
+                    type="text"
+                    placeholder="Введите год публикации"
+                    value={publishDate}
+                    onChange={handlePublishDateChange}
+                    isInvalid={!!errors.publishDate}
+                />
+                {errors.publishDate && <Form.Control.Feedback type="invalid">{errors.publishDate}</Form.Control.Feedback>}
             </Form.Group>
 
             <Button variant="primary" type="button" onClick={handleAddBook}>
