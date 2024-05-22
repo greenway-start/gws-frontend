@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Button, InputGroup, FormControl } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Book from "./Book";
-import Filter from "../hook/useFilter";
+import Filter from "./Filter";
 
 const Books = ({ books, onEdit, onDelete }) => {
     const [filteredBooks, setFilteredBooks] = useState(books);
