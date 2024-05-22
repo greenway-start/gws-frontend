@@ -70,6 +70,8 @@ const Books = ({ books, onEdit, onDelete }) => {
                     {finalBooks.map(book => (
                         <Book key={book.id} book={book} onEdit={onEdit} onDelete={onDelete} />
                     ))}
+
+                    
                 </div>
             )}
         </div>
