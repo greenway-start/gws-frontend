@@ -8,6 +8,7 @@ import './scc/main.css';
 import { AuthProvider } from "./components/AuthProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./components/Login";
+import Register from "./components/Register"; // Импортируем компонент регистрации
 
 const App = () => {
     const { books, deleteBook, addBook, editBook } = useBook();
@@ -20,6 +21,7 @@ const App = () => {
                     <main>
                         <Routes>
                             <Route path="/login" element={<Login />} />
+                            <Route path="/register" element={<Register />} /> {/* Добавлен маршрут регистрации */}
                             <Route
                                 path="/books"
                                 element={

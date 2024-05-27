@@ -1,21 +1,22 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "./firebaseConfig";
+import { useAuth } from "./AuthProvider";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { auth } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(""); // ochst oshibki
+    setError(""); // Очистка ошибки
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/books"); // zashita posle vxoda
+      navigate("/books"); // Защита после входа
     } catch (error) {
       setError("Ошибка входа. Проверьте ваш email и пароль.");
       console.error("Error logging in:", error);
@@ -42,7 +43,7 @@ const Login = () => {
         />
         <button type="submit">Login</button>
       </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>} 
+      {error && <p style={{ color: 'red' }}>{error}</p>} {/* Отображение ошибки */}
     </div>
   );
 };

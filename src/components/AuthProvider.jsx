@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebaseConfig";
+import initializeFirebase from "./firebaseConfig";
 
 const AuthContext = createContext();
 
@@ -8,16 +7,31 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
+  const [auth, setAuth] = useState(null);
+  const [db, setDb] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
-    });
-    return unsubscribe;
+    const initFirebase = async () => {
+      const { auth, db } = await initializeFirebase();
+      setAuth(auth);
+      setDb(db);
+    };
+
+    initFirebase();
   }, []);
 
+  useEffect(() => {
+    if (auth) {
+      const unsubscribe = auth.onAuthStateChanged((user) => {
+        setCurrentUser(user);
+        console.log('Auth state changed', user);
+      });
+      return () => unsubscribe();
+    }
+  }, [auth]);
+
   return (
-    <AuthContext.Provider value={{ currentUser }}>
+    <AuthContext.Provider value={{ currentUser, auth, db }}>
       {children}
     </AuthContext.Provider>
   );
