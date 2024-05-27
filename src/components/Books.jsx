@@ -1,11 +1,15 @@
-import React, { useState } from "react";
-import { Form, Button, InputGroup, FormControl } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// src/components/Books.jsx
+
+import React, { useState, useEffect } from "react";
 import Book from "./Book";
 import Filter from "./Filter";
 
-const Books = ({ books, onEdit, onDelete }) => {
+const Books = ({ books = [], onEdit, onDelete }) => {
     const [filteredBooks, setFilteredBooks] = useState(books);
+
+    useEffect(() => {
+        setFilteredBooks(books);
+    }, [books]);
 
     const handleFilterChange = (searchTerm, filterDate, sortOrder) => {
         const filtered = books.filter(book =>

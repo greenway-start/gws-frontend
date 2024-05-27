@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { loadBooksFromLocalStorage, saveBooksToLocalStorage } from '../storage/bookStorage';
 
 const useBook = () => {
-    const [books, setBooks] = useState(loadBooksFromLocalStorage);
+    const [books, setBooks] = useState(loadBooksFromLocalStorage() || []);
 
     useEffect(() => {
         saveBooksToLocalStorage(books);

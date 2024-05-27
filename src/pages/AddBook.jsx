@@ -1,30 +1,34 @@
+// src/pages/AddBook.jsx
+
 import React, { useState, useRef } from "react";
 import { Form, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const AddBook = (props) => {
-    const [avtor, setAvtor] = useState("");
-    const [name, setName] = useState("");
-    const [publishDate, setPublishDate] = useState("");
+const AddBook = ({ onAdd, book }) => {
+    const [avtor, setAvtor] = useState(book ? book.avtor : "");
+    const [name, setName] = useState(book ? book.name : "");
+    const [publishDate, setPublishDate] = useState(book ? book.publishDate : "");
     const [errors, setErrors] = useState({ avtor: "", name: "", publishDate: "" });
     const myForm = useRef(null);
 
     const handleAddBook = () => {
         if (validateForm()) {
-            myForm.current.reset();
             const bookAdd = {
-                avtor: avtor,
-                name: name,
-                publishDate: publishDate
+                avtor,
+                name,
+                publishDate
             };
-            if (props.book) {
-                bookAdd.id = props.book.id;
+            if (book) {
+                bookAdd.id = book.id;
             }
-            props.onAdd(bookAdd);
+            onAdd(bookAdd);
             setAvtor("");
             setName("");
             setPublishDate("");
             setErrors({ avtor: "", name: "", publishDate: "" });
+            if (myForm.current) {
+                myForm.current.reset();
+            }
         }
     };
 
@@ -116,7 +120,7 @@ const AddBook = (props) => {
             </Form.Group>
 
             <Button variant="primary" type="button" onClick={handleAddBook}>
-                Добавить
+                {book ? "Обновить книгу" : "Добавить книгу"}
             </Button>
         </Form>
     );
