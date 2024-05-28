@@ -1,20 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { useAuth } from "./AuthProvider";
 
-const Register = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [error, setError] = useState("");
+const Register: React.FC = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const navigate = useNavigate();
   const { auth, db } = useAuth();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError("");
+
+    if (!auth || !db) {
+      setError("Ошибка инициализации аутентификации или базы данных.");
+      return;
+    }
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);

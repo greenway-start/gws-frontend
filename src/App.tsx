@@ -8,9 +8,9 @@ import './scc/main.css';
 import { AuthProvider } from "./components/AuthProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./components/Login";
-import Register from "./components/Register"; // Импортируем компонент регистрации
+import Register from "./components/Register";
 
-const App = () => {
+const App: React.FC = () => {
     const { books, deleteBook, addBook, editBook } = useBook();
 
     return (
@@ -21,7 +21,7 @@ const App = () => {
                     <main>
                         <Routes>
                             <Route path="/login" element={<Login />} />
-                            <Route path="/register" element={<Register />} /> {/* Добавлен маршрут регистрации */}
+                            <Route path="/register" element={<Register />} />
                             <Route
                                 path="/books"
                                 element={
@@ -38,8 +38,7 @@ const App = () => {
                                     </ProtectedRoute>
                                 }
                             />
-                            <Route path="/" element={<Navigate to="/books" />} />
-                            <Route path="*" element={<Navigate to="/books" />} />
+                            <Route path="/*" element={<Navigate to="/books" />} />
                         </Routes>
                     </main>
                 </div>

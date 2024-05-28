@@ -1,5 +1,6 @@
+import { Book } from "../types";
 
-export const loadBooksFromLocalStorage = () => {
+export const loadBooksFromLocalStorage = (): Book[] => {
   try {
       const serializedState = localStorage.getItem('books');
       return serializedState === null ? [] : JSON.parse(serializedState);
@@ -9,7 +10,7 @@ export const loadBooksFromLocalStorage = () => {
   }
 };
 
-export const saveBooksToLocalStorage = (books) => {
+export const saveBooksToLocalStorage = (books: Book[]): void => {
   try {
       const serializedState = JSON.stringify(books);
       localStorage.setItem('books', serializedState);

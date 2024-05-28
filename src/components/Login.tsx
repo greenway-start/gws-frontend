@@ -1,22 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useAuth } from "./AuthProvider";
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+const Login: React.FC = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const navigate = useNavigate();
   const { auth } = useAuth();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setError(""); // Очистка ошибки
+    setError(""); 
+
+    if (!auth) {
+      setError("Ошибка инициализации аутентификации.");
+      return;
+    }
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/books"); // Защита после входа
+      navigate("/books"); 
     } catch (error) {
       setError("Ошибка входа. Проверьте ваш email и пароль.");
       console.error("Error logging in:", error);
