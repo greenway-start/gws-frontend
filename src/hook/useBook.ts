@@ -4,7 +4,12 @@ import { loadBooksFromLocalStorage, saveBooksToLocalStorage } from '../common/st
 import { Book, BookCreate } from '../common/types';
 
 const useBook = () => {
-    const [books, setBooks] = useState<Book[]>(loadBooksFromLocalStorage() || []);
+    const [books, setBooks] = useState<Book[]>([]);
+
+    useEffect(() => {
+        const initialBooks = loadBooksFromLocalStorage() || [];
+        setBooks(initialBooks);
+    }, []);
 
     useEffect(() => {
         saveBooksToLocalStorage(books);
