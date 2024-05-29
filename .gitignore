@@ -6,6 +6,7 @@
 /.idea
 /.pnp
 .pnp.js
+src/common/firebaseConfig.json
 
 # testing
 /coverage

@@ -1,27 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, ChangeEvent, ChangeEventHandler } from "react";
 import { Form, Button, InputGroup, FormControl } from 'react-bootstrap';
+import { EventContext } from "../common/types";
 
-const Filter = ({ onFilterChange }) => {
-    const [searchTerm, setSearchTerm] = useState("");
-    const [filterDate, setFilterDate] = useState("");
-    const [sortOrder, setSortOrder] = useState("asc");
+interface FilterProps {
+  onFilterChange: (searchTerm: string, filterDate: string, sortOrder: "asc" | "desc") => void;
+}
 
-    const handleSearch = (e) => {
+const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
+    const [searchTerm, setSearchTerm] = useState<string>("");
+    const [filterDate, setFilterDate] = useState<string>("");
+    const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+
+    const handleSearch = (e: any) => {
         const value = e.target.value;
         setSearchTerm(value);
         onFilterChange(value, filterDate, sortOrder);
     };
 
-    const handleFilterDateChange = (e) => {
+    const handleFilterDateChange = (e: any) => {
         const value = e.target.value;
         setFilterDate(value);
         onFilterChange(searchTerm, value, sortOrder);
     };
 
-    const handleSortOrderChange = (e) => {
+    const handleSortOrderChange = (e: EventContext) => {
         const value = e.target.value;
-        setSortOrder(value);
-        onFilterChange(searchTerm, filterDate, value);
+        setSortOrder(value as "asc" | "desc");
+        onFilterChange(searchTerm, filterDate, value as "asc" | "desc");
     };
 
     const handleResetFilters = () => {
