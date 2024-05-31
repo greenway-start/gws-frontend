@@ -1,32 +1,28 @@
-import React, { useState, FormEvent } from "react";
+import React, { useState, FormEvent, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from "../common/store";
+import { login } from "../common/authActions";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { useAuth } from "./AuthProvider";
+import { initializeFirebase } from "../common/firebaseConfig"; // Корректный импорт
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<string>("");
+  const { currentUser, error } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { auth } = useAuth();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setError(""); 
-
-    if (!auth) {
-      setError("Ошибка инициализации аутентификации.");
-      return;
-    }
-
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate("/books"); 
-    } catch (error) {
-      setError("Ошибка входа. Проверьте ваш email и пароль.");
-      console.error("Error logging in:", error);
-    }
+    const { auth } = initializeFirebase();
+    dispatch(login(auth, email, password) as any); // Используем as any
   };
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/books");
+    }
+  }, [currentUser, navigate]);
 
   return (
     <div>

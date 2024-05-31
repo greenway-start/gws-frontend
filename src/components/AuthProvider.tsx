@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { Auth, User, onAuthStateChanged } from "firebase/auth";
 import { Firestore } from "firebase/firestore";
-import initializeFirebase from "../common/firebaseConfig";
+import { initializeFirebase } from "../common/firebaseConfig"; // Корректный импорт
 
 interface AuthContextType {
   currentUser: User | null;
@@ -30,7 +30,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     const initFirebase = async () => {
-      const { auth, db } = await initializeFirebase();
+      const { auth, db } = initializeFirebase();
       setAuth(auth);
       setDb(db);
     };
