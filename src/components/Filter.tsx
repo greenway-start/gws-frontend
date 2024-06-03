@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent, ChangeEventHandler } from "react";
 import { Form, Button, InputGroup, FormControl } from 'react-bootstrap';
-import { EventContext } from "../common/types/types";
+import { EventContext } from "../common/types/BOOK";
 
 interface FilterProps {
   onFilterChange: (searchTerm: string, filterDate: string, sortOrder: "asc" | "desc") => void;

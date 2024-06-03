@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import { loadBooksFromLocalStorage, saveBooksToLocalStorage } from '../common/storage/bookStorage';
-import { Book, BookCreate } from '../common/types/types';
+import { Book, BookCreate } from '../common/types/BOOK';
 
 const useBook = () => {
     const [books, setBooks] = useState<Book[]>([]);

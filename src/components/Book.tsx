@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IoCloseCircleSharp, IoHammerSharp } from "react-icons/io5";
 import AddBook from "../pages/AddBook";
-import { Book } from "../common/types/types";
+import { Book } from "../common/types/BOOK";
 
 interface BookProps {
   book: Book;
