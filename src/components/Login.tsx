@@ -1,21 +1,22 @@
 import React, { useState, FormEvent, useEffect } from "react";
 import { useDispatch } from 'react-redux';
+import { AppDispatch } from "../common/types/store";
 import { login } from "../common/authActions";
 import { useNavigate } from "react-router-dom";
 import { initializeFirebase } from "../common/firebaseConfig";
- import { useAuth } from "../hook/useAuth";
+import { useAuth } from "../hook/useAuth";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const { currentUser, error } = useAuth();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const { auth } = initializeFirebase();
-    dispatch(login(auth, email, password) as any); // Используем as any
+    dispatch(login(auth, email, password));
   };
 
   useEffect(() => {
