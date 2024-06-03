@@ -1,4 +1,4 @@
-import { AuthState, AuthActionTypes, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from './authTypes';
+import { AuthState, AuthActionTypes, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from './types/authTypes';
 
 const initialState: AuthState = {
   currentUser: null,

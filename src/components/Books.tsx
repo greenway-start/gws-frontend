@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import BookView from "./Book";
 import Filter from "./Filter";
-import { Book as BookType } from "../common/types";
+import { Book as BookType } from "../common/types/types";
 
 interface BooksProps {
   books: BookType[];

@@ -1,14 +1,14 @@
 import React, { useState, FormEvent, useEffect } from "react";
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from "../common/store";
+import { useDispatch } from 'react-redux';
 import { login } from "../common/authActions";
 import { useNavigate } from "react-router-dom";
-import { initializeFirebase } from "../common/firebaseConfig"; // Корректный импорт
+import { initializeFirebase } from "../common/firebaseConfig";
+ import { useAuth } from "../hook/useAuth";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const { currentUser, error } = useSelector((state: RootState) => state.auth);
+  const { currentUser, error } = useAuth();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

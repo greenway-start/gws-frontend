@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { authReducer } from './authReducer';
+import { authReducer } from '../authReducer';
 import { AuthState } from './authTypes';
 
 export interface RootState {
