@@ -4,13 +4,15 @@ import { Firestore } from "firebase/firestore";
 
 class AuthStore {
   email = "";
-  password = "";
+  private _password = "";
   error = "";
   auth: Auth | null = null;
   db: Firestore | null = null;
 
-  constructor() {
+  constructor(auth: Auth | null, db: Firestore | null) {
     makeAutoObservable(this);
+    this.auth = auth;
+    this.db = db;
   }
 
   setEmail(email: string) {
@@ -18,19 +20,11 @@ class AuthStore {
   }
 
   setPassword(password: string) {
-    this.password = password;
+    this._password = password;
   }
 
   setError(error: string) {
     this.error = error;
-  }
-
-  setAuth(auth: Auth | null) {
-    this.auth = auth;
-  }
-
-  setDb(db: Firestore | null) {
-    this.db = db;
   }
 
   async login() {
@@ -40,13 +34,21 @@ class AuthStore {
       return;
     }
     try {
-      await signInWithEmailAndPassword(this.auth, this.email, this.password);
+      await signInWithEmailAndPassword(this.auth, this.email, this._password);
+      this.clearPassword();
     } catch (error) {
       this.setError("Ошибка входа. Проверьте ваш email и пароль.");
       console.error("Error logging in:", error);
     }
   }
+
+  clearPassword() {
+    this._password = "";
+  }
+
+  isAuthenticated(): boolean {
+    return this.auth !== null && this.auth.currentUser !== null;
+  }
 }
 
-const authStore = new AuthStore();
-export default authStore;
+export default AuthStore;

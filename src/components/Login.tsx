@@ -1,22 +1,21 @@
-import React, { FormEvent, useEffect } from "react";
+import React, { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import authStore from "../common/storage/authstore";
+import AuthStore from "../common/storage/authstore";
 import { useAuth } from "./AuthProvider";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const { auth, db } = useAuth();
+  const [password, setPassword] = useState<string>("");
 
-  useEffect(() => {
-    authStore.setAuth(auth);
-    authStore.setDb(db);
-  }, [auth, db]);
+  const authStore = new AuthStore(auth, db); // Создаем экземпляр с инициализацией
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    authStore.setPassword(password);  // Устанавливаем пароль в authStore
     await authStore.login();
-    if (!authStore.error) {
+    if (authStore.isAuthenticated()) {
       navigate("/books");
     }
   };
@@ -34,8 +33,8 @@ const Login: React.FC = () => {
         />
         <input
           type="password"
-          value={authStore.password}
-          onChange={(e) => authStore.setPassword(e.target.value)}
+          value={password}  // Используем локальное состояние
+          onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           required
         />
