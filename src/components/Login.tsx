@@ -1,30 +1,23 @@
-import React, { useState, FormEvent } from "react";
+import React, { FormEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { observer } from "mobx-react-lite";
+import authStore from "../common/storage/authstore";
 import { useAuth } from "./AuthProvider";
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<string>("");
   const navigate = useNavigate();
-  const { auth } = useAuth();
+  const { auth, db } = useAuth();
+
+  useEffect(() => {
+    authStore.setAuth(auth);
+    authStore.setDb(db);
+  }, [auth, db]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setError(""); 
-
-    if (!auth) {
-      setError("Ошибка инициализации аутентификации.");
-      return;
-    }
-
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate("/books"); 
-    } catch (error) {
-      setError("Ошибка входа. Проверьте ваш email и пароль.");
-      console.error("Error logging in:", error);
+    await authStore.login();
+    if (!authStore.error) {
+      navigate("/books");
     }
   };
 
@@ -34,23 +27,23 @@ const Login: React.FC = () => {
       <form onSubmit={handleSubmit}>
         <input
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={authStore.email}
+          onChange={(e) => authStore.setEmail(e.target.value)}
           placeholder="Email"
           required
         />
         <input
           type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={authStore.password}
+          onChange={(e) => authStore.setPassword(e.target.value)}
           placeholder="Password"
           required
         />
         <button type="submit">Login</button>
       </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>} {/* Отображение ошибки */}
+      {authStore.error && <p style={{ color: 'red' }}>{authStore.error}</p>}
     </div>
   );
 };
 
-export default Login;
+export default observer(Login);

@@ -18,13 +18,6 @@ interface FirebaseInitialization {
   db: Firestore;
 }
 
-// const loadFirebaseConfig = async (): Promise<FirebaseConfig> => {
-//   const response = await fetch('/firebaseConfig.json');
-//   if (!response.ok) {
-//     throw new Error('Failed to load Firebase configuration');
-//   }
-//   return response.json();
-// };
 
 const initializeFirebase = async (): Promise<FirebaseInitialization> => {
   const firebaseConfig = firebaseConfigData as FirebaseConfig 
