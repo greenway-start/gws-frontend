@@ -7,14 +7,14 @@ import { useAuth } from "./AuthProvider";
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const { auth, db } = useAuth();
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   const authStore = new AuthStore(auth, db); // Создаем экземпляр с инициализацией
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    authStore.setPassword(password);  // Устанавливаем пароль в authStore
-    await authStore.login();
+    await authStore.login(email, password); // Передаем email и пароль в метод login
     if (authStore.isAuthenticated()) {
       navigate("/books");
     }
@@ -26,14 +26,14 @@ const Login: React.FC = () => {
       <form onSubmit={handleSubmit}>
         <input
           type="email"
-          value={authStore.email}
-          onChange={(e) => authStore.setEmail(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
           required
         />
         <input
           type="password"
-          value={password}  // Используем локальное состояние
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           required
