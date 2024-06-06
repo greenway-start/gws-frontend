@@ -1,16 +1,12 @@
 import React, { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import AuthStore from "../common/storage/authstore";
-import { useAuth } from "./AuthProvider";
+import authStore from "../common/storage/authstore";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const { auth, db } = useAuth();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-
-  const authStore = new AuthStore(auth, db); // Создаем экземпляр с инициализацией
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();

@@ -1,6 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import { signInWithEmailAndPassword, Auth } from "firebase/auth";
 import { Firestore } from "firebase/firestore";
+import initializeFirebase from "../firebaseConfig";
 
 class AuthStore {
   email = "";
@@ -8,8 +9,13 @@ class AuthStore {
   auth: Auth | null = null;
   db: Firestore | null = null;
 
-  constructor(auth: Auth | null, db: Firestore | null) {
+  constructor() {
     makeAutoObservable(this);
+    this.init()
+  }
+
+  async init() {
+    const { auth, db } = await initializeFirebase();
     this.auth = auth;
     this.db = db;
   }
@@ -40,5 +46,7 @@ class AuthStore {
     return this.auth !== null && this.auth.currentUser !== null;
   }
 }
+const authStore = new AuthStore();
 
-export default AuthStore;
+
+export default authStore;
