@@ -11,7 +11,7 @@ class AuthStore {
 
   constructor() {
     makeAutoObservable(this);
-    this.init()
+    this.init();
   }
 
   async init() {
@@ -46,7 +46,6 @@ class AuthStore {
     return this.auth !== null && this.auth.currentUser !== null;
   }
 }
+
 const authStore = new AuthStore();
-
-
 export default authStore;
