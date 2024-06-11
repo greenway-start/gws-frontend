@@ -1,30 +1,18 @@
-import React, { useState, FormEvent } from "react";
+import React, { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { useAuth } from "./AuthProvider";
+import { observer } from "mobx-react-lite";
+import authStore from "../common/storage/authstore";
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<string>("");
-  const navigate = useNavigate();
-  const { auth } = useAuth();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setError(""); 
-
-    if (!auth) {
-      setError("Ошибка инициализации аутентификации.");
-      return;
-    }
-
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate("/books"); 
-    } catch (error) {
-      setError("Ошибка входа. Проверьте ваш email и пароль.");
-      console.error("Error logging in:", error);
+    await authStore.login(email, password); // Передаем email и пароль в метод login
+    if (authStore.isAuthenticated()) {
+      navigate("/books");
     }
   };
 
@@ -48,9 +36,9 @@ const Login: React.FC = () => {
         />
         <button type="submit">Login</button>
       </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>} {/* Отображение ошибки */}
+      {authStore.error && <p style={{ color: 'red' }}>{authStore.error}</p>}
     </div>
   );
 };
 
-export default Login;
+export default observer(Login);
