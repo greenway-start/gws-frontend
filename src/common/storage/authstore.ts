@@ -6,10 +6,12 @@ import initializeFirebase from "../firebaseConfig";
 class AuthStore {
   email = "";
   error = "";
-  auth: Auth | null = null;
-  db: Firestore | null = null;
+  auth: Auth | null; 
+  db: Firestore | null;
 
   constructor() {
+    this.auth = null; 
+    this.db = null; 
     makeAutoObservable(this);
     this.init();
   }
