@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import BookView from "./Book";
+import BookView from "./BookView";
 import Filter from "./Filter";
-import { Book as BookType } from "../common/types/BOOK";
+import { Book as BookType } from "../common/types/bookt";
 
 interface BooksProps {
   books: BookType[];
@@ -43,7 +43,7 @@ const Books: React.FC<BooksProps> = ({ books = [], onEdit, onDelete }) => {
       ) : (
         <div className="mt-3">
           {filteredBooks.map(book => (
-            <BookView key={book.id} book={book} onEdit={(updatedBook) => onEdit({ ...book, ...updatedBook })} onDelete={onDelete} />
+            <BookView key={book.id} book={book} onEdit={(updatedBook: BookType) => onEdit({ ...book, ...updatedBook })} onDelete={onDelete} />
           ))}
         </div>
       )}

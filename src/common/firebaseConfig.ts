@@ -13,12 +13,17 @@ interface FirebaseConfig {
   measurementId: string;
 }
 
+let firebaseApp: FirebaseApp | null = null;
+let auth: Auth | null = null;
+let db: Firestore | null = null;
+
 const initializeFirebase = (): { auth: Auth; db: Firestore } => {
-  const firebaseConfig = firebaseConfigData as FirebaseConfig;
-  const app: FirebaseApp = initializeApp(firebaseConfig);
-  const auth: Auth = getAuth(app);
-  const db: Firestore = getFirestore(app);
-  return { auth, db };
+  if (!firebaseApp) {
+    firebaseApp = initializeApp(firebaseConfigData as FirebaseConfig);
+    auth = getAuth(firebaseApp);
+    db = getFirestore(firebaseApp);
+  }
+  return { auth: auth!, db: db! };
 };
 
 export { initializeFirebase };

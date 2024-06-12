@@ -1,3 +1,4 @@
+/* main.css */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap');
 
 * {
@@ -14,38 +15,94 @@ body {
     line-height: 1.6;
 }
 
-.header {
+.sidebar {
+    width: 20%;
+    height: 100vh;
     background-color: #4a90e2;
     padding: 20px;
-    font-weight: 600;
-    font-size: 24px;
-    text-align: center;
     color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.logo img {
+    height: 50px;
+    width: auto;
+    margin-right: 10px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo h1 {
+    font-size: 20px;
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 15px 0;
+}
+
+nav ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+.user-info {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.user-info p {
+    margin: 10px 0;
+}
+
+.logout-button {
+    background-color: #e74c3c;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    transition: background-color 300ms ease, transform 300ms ease;
+    width: 100%; /* Занимает всю ширину родительского элемента */
+}
+
+.logout-button:hover {
+    background-color: #c0392b;
+    transform: scale(1.05);
 }
 
 main {
-    margin: 50px auto;
-    width: 60%;
-    float: left;
+    margin-left: 20%;
     padding: 20px;
+    width: 80%;
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-aside {
-    width: 25%;
-    margin-top: 50px;
-    margin-left: 5%;
-    float: left;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-main .book {
+.main .book {
     margin-bottom: 50px;
     background-color: #e6f7ff;
     padding: 20px;
@@ -53,27 +110,26 @@ main .book {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-main .delete-icon, main .edit-icon {
+.main .delete-icon, .main .edit-icon {
     float: right;
     cursor: pointer;
     transition: opacity 300ms ease;
     transform: scale(1.5);
 }
 
-main .delete-icon {
+.main .delete-icon {
     color: #e74c3c;
     margin-left: 10px;
 }
 
-main .edit-icon {
+.main .edit-icon {
     color: #4a90e2;
 }
 
-main .delete-icon:hover, main .edit-icon:hover {
+.main .delete-icon:hover, .main .edit-icon:hover {
     opacity: 0.7;
 }
 
-/* Добавляем стили для формы */
 form {
     margin-top: 20px;
 }
@@ -135,6 +191,7 @@ form button:hover {
     transform: scale(1.01);
     background-color: #357ab8;
 }
+
 .error {
     color: red;
     font-size: 12px;

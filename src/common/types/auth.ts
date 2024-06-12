@@ -1,9 +1,12 @@
-import { User } from "firebase/auth";
+import { Auth, User } from "firebase/auth";
+import { Firestore } from "firebase/firestore"; // Добавьте это
 
 export interface AuthState {
   currentUser: User | null;
   error: string | null;
   loading: boolean;
+  auth: Auth | null; // Убедитесь, что это здесь
+  db: Firestore | null; // Добавьте это свойство
 }
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';

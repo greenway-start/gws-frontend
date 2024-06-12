@@ -1,4 +1,4 @@
-import { Book } from "../types/BOOK";
+import { Book } from "../types/bookt";
 
 export const loadBooksFromLocalStorage = (): Book[] => {
   try {

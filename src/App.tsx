@@ -1,6 +1,7 @@
+// App.tsx
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Header from "./components/Header";
+import Sidebar from "./components/Sidebar";
 import Books from "./components/Books";
 import AddBook from "./pages/AddBook";
 import useBook from './hook/useBook';
@@ -16,8 +17,8 @@ const App: React.FC = () => {
     return (
         <AuthProvider>
             <Router>
-                <div>
-                    <Header title="Список книг" />
+                <div className="app-container">
+                    <Sidebar />
                     <main>
                         <Routes>
                             <Route path="/login" element={<Login />} />
@@ -26,7 +27,9 @@ const App: React.FC = () => {
                                 path="/books"
                                 element={
                                     <ProtectedRoute>
-                                        <Books books={books} onEdit={editBook} onDelete={deleteBook} />
+                                        <>
+                                            <Books books={books} onEdit={editBook} onDelete={deleteBook} />
+                                        </>
                                     </ProtectedRoute>
                                 }
                             />

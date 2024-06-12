@@ -1,9 +1,11 @@
-import { AuthState, AuthActionTypes, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from './types/authTypes';
+import { AuthState, AuthActionTypes, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from './types/auth';
 
 const initialState: AuthState = {
   currentUser: null,
   error: null,
-  loading: false
+  loading: false,
+  auth: null, // Убедитесь, что это здесь
+  db: null // Добавьте это свойство
 };
 
 export function authReducer(state = initialState, action: AuthActionTypes): AuthState {
