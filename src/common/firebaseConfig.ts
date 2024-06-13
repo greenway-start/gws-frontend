@@ -13,28 +13,17 @@ interface FirebaseConfig {
   measurementId: string;
 }
 
-interface FirebaseInitialization {
-  auth: Auth;
-  db: Firestore;
-}
+let firebaseApp: FirebaseApp | null = null;
+let auth: Auth | null = null;
+let db: Firestore | null = null;
 
-// const loadFirebaseConfig = async (): Promise<FirebaseConfig> => {
-//   const response = await fetch('/firebaseConfig.json');
-//   if (!response.ok) {
-//     throw new Error('Failed to load Firebase configuration');
-//   }
-//   return response.json();
-// };
-
-const initializeFirebase = async (): Promise<FirebaseInitialization> => {
-  const firebaseConfig = firebaseConfigData as FirebaseConfig 
-  const app: FirebaseApp = initializeApp(firebaseConfig);
-  const auth: Auth = getAuth(app);
-  const db: Firestore = getFirestore(app);
-
-  console.log('Firebase initialized', { auth, db });
-
-  return { auth, db };
+const initializeFirebase = (): { auth: Auth; db: Firestore } => {
+  if (!firebaseApp) {
+    firebaseApp = initializeApp(firebaseConfigData as FirebaseConfig);
+    auth = getAuth(firebaseApp);
+    db = getFirestore(firebaseApp);
+  }
+  return { auth: auth!, db: db! };
 };
 
-export default initializeFirebase;
+export { initializeFirebase };

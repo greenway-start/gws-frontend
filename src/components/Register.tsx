@@ -2,7 +2,7 @@ import React, { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import { useAuth } from "./AuthProvider";
+import { useAuth } from "../hook/useAuth";
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState<string>("");

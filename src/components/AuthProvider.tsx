@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { Auth, User, onAuthStateChanged } from "firebase/auth";
 import { Firestore } from "firebase/firestore";
-import initializeFirebase from "../common/firebaseConfig";
+import { initializeFirebase } from "../common/firebaseConfig";
 
 interface AuthContextType {
   currentUser: User | null;
@@ -29,16 +29,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [db, setDb] = useState<Firestore | null>(null);
 
   useEffect(() => {
-    const initFirebase = async () => {
-      const { auth, db } = await initializeFirebase();
-      setAuth(auth);
-      setDb(db);
-    };
-
-    initFirebase();
-  }, []);
-
-  useEffect(() => {
+    const { auth, db } = initializeFirebase();
+    setAuth(auth);
+    setDb(db);
     if (auth) {
       const unsubscribe = onAuthStateChanged(auth, (user) => {
         setCurrentUser(user);
@@ -46,7 +39,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
       return () => unsubscribe();
     }
-  }, [auth]);
+  }, []);
 
   return (
     <AuthContext.Provider value={{ currentUser, auth, db }}>
