@@ -4,8 +4,8 @@ const initialState: AuthState = {
   currentUser: null,
   error: null,
   loading: false,
-  auth: null, // Убедитесь, что это здесь
-  db: null // Добавьте это свойство
+  auth: null, 
+  db: null 
 };
 
 export function authReducer(state = initialState, action: AuthActionTypes): AuthState {

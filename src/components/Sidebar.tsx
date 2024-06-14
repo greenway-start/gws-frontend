@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hook/useAuth";
 import LogoutButton from "./LogoutButton";
-import logo from "../image/logo.png"; // Импорт логотипа
+import logo from "../image/logo.png";
 
 const Sidebar: React.FC = () => {
   const { currentUser } = useAuth();
@@ -17,11 +17,23 @@ const Sidebar: React.FC = () => {
         <ul>
           <li><Link to="/books">Главная</Link></li>
           <li><Link to="/addBook">Добавить Книгу</Link></li>
+          {!currentUser && (
+            <>
+              <li><Link to="/login">Вход</Link></li>
+              <li><Link to="/register">Регистрация</Link></li>
+            </>
+          )}
         </ul>
       </nav>
       <div className="user-info">
-        <p>{currentUser?.email}</p>
-        <LogoutButton />
+        {currentUser ? (
+          <>
+            <p>{currentUser.email}</p>
+            <LogoutButton />
+          </>
+        ) : (
+          <p>Вы не вошли в систему</p>
+        )}
       </div>
     </div>
   );
