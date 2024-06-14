@@ -1,73 +1,64 @@
 import React, { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
 import { useAuth } from "../hook/useAuth";
 
-const Register: React.FC = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [name, setName] = useState<string>("");
-  const [error, setError] = useState<string>("");
-  const navigate = useNavigate();
-  const { auth, db } = useAuth();
+const Register = () => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
+    const { auth } = useAuth(); // Получаем экземпляр Auth из контекста
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    setError("");
+    const handleRegister = async (e: FormEvent) => {
+        e.preventDefault();
+        if (password !== confirmPassword) {
+            setError("Пароли не совпадают");
+            return;
+        }
+        if (!auth) {
+            setError("Система аутентификации не инициализирована");
+            return;
+        }
+        try {
+            await createUserWithEmailAndPassword(auth, email, password);
+            navigate("/books"); // Перенаправление на страницу после успешной регистрации
+        } catch (error: any) {
+            setError("Ошибка регистрации: " + error.message);
+        }
+    };
 
-    if (!auth || !db) {
-      setError("Ошибка инициализации аутентификации или базы данных.");
-      return;
-    }
-
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      // Сохранение дополнительных данных в Firestore
-      await setDoc(doc(db, "users", user.uid), {
-        name: name,
-        email: email
-      });
-
-      navigate("/books");
-    } catch (error) {
-      setError("Ошибка регистрации. Попробуйте снова.");
-      console.error("Error registering user:", error);
-    }
-  };
-
-  return (
-    <div>
-      <h2>Регистрация</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Имя"
-          required
-        />
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          required
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Пароль"
-          required
-        />
-        <button type="submit">Зарегистрироваться</button>
-      </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-    </div>
-  );
+    return (
+        <div>
+            <h2>Регистрация</h2>
+            <form onSubmit={handleRegister}>
+                <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Email"
+                    required
+                />
+                <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Пароль"
+                    required
+                />
+                <input
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="Подтвердите пароль"
+                    required
+                />
+                <button type="submit">Зарегистрироваться</button>
+                {error && <p style={{ color: "red" }}>{error}</p>}
+            </form>
+        </div>
+    );
 };
 
 export default Register;
