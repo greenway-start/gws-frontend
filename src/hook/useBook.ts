@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import { loadBooksFromLocalStorage, saveBooksToLocalStorage } from '../common/storage/bookStorage';
-import { Book, BookCreate } from '../common/types';
+import { Book, BookCreate } from '../common/types/bookt';
 
 const useBook = () => {
     const [books, setBooks] = useState<Book[]>([]);
@@ -9,12 +9,12 @@ const useBook = () => {
     useEffect(() => {
         const initialBooks = loadBooksFromLocalStorage() || [];
         setBooks(initialBooks);
-    }, []);
-
-    useEffect(() => {
+      }, []);
+      
+      useEffect(() => {
         saveBooksToLocalStorage(books);
-    }, [books]);
-
+      }, [books]);
+      
     const deleteBook = (id: string) => {
         const updatedBooks = books.filter((el) => el.id !== id);
         setBooks(updatedBooks);

@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { Book, BookCreate } from "../common/types";
+import { Book,BookCreate } from "../common/types/bookt";
 
 interface AddBookProps {
   book?: Book;
